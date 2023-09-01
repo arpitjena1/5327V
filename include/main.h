@@ -9,6 +9,7 @@
 #include "triballcontrol.hpp"
 #include "globalconfig.hpp"
 #include "autons.hpp"
+#include "autonrerun.hpp"
 using namespace pros;
 
 #ifdef __cplusplus
