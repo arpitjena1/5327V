@@ -21,6 +21,79 @@ void autonomous() {
 
 }
 
+
+//-------------------------------------------------------------------
+
+//record movement in sd card
+//copy text from sd card after run to files here
+//run the mapped auton
+void recordedarcdriver(){
+	int i;
+	while(true){
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+			ofs.open("auto1.txt", std::ofstream::out);
+      		int i = 0;
+
+			while(true && i < 750){
+			
+
+			arms::chassis::arcade(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		                      master.get_analog(ANALOG_RIGHT_X) * (double)100 /
+		                          127);
+			ofs << "{";
+          if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) > 17 || abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 17){ // drive
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)+master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)-master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)+master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)-master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+        } else {
+            ofs << formatToString(0); 
+            ofs << formatToString(0);
+            ofs << formatToString(0);
+            ofs << formatToString(0);
+        }
+
+		pros::delay(20);
+		i++;
+		}
+		ofs.close();
+	}
+}
+}
+void recordedtankdriver(){
+	int i;
+	while(true){
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+			ofs.open("auto1.txt", std::ofstream::out);
+      		int i = 0;
+
+			while(true && i < 750){
+			
+
+			arms::chassis::tank(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		                      master.get_analog(ANALOG_RIGHT_Y) * (double)100 /
+		                          127);
+			ofs << "{";
+          if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) > 17 || abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y)) > 17){ // drive
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y));
+            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+        } else {
+            ofs << formatToString(0); 
+            ofs << formatToString(0);
+            ofs << formatToString(0);
+            ofs << formatToString(0);
+        }
+
+		pros::delay(20);
+		i++;
+		}
+		ofs.close();
+	}
+}
+}
+
 void opcontrol() {
 
 	while (true) {
@@ -50,37 +123,5 @@ void opcontrol() {
         }
 
 
-	}
-}
-
-//record movement in sd card
-//copy text from sd card after run to files here
-//run the mapped auton
-void otherdriver(){
-	while(true){
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
-			ofs.open("auto1.txt", std::ofstream::out);
-      		int i = 0;
-
-			arms::chassis::arcade(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		                      master.get_analog(ANALOG_RIGHT_X) * (double)100 /
-		                          127);
-			ofs << "{";
-          if(abs(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) > 17 || abs(master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) > 17){ // drive
-            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)+master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
-            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)-master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
-            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)+master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
-            ofs << formatToString(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)-master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
-        } else {
-            ofs << formatToString(0); 
-            ofs << formatToString(0);
-            ofs << formatToString(0);
-            ofs << formatToString(0);
-        }
-
-		pros::delay(20);
-		i++;
-		}
-		ofs.close();
 	}
 }
